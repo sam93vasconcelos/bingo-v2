@@ -1,4 +1,4 @@
-# BindoOnline
+# BingOnline
 
 ### Um simples projeto de bingo online feito em VueJs
 ```
