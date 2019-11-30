@@ -1,15 +1,16 @@
 <template>
   <div>
-    <h1 class="text-center">Bem vindo ao bingOnline!</h1>
-    <hr>
+    <b-button @click="terminar" block variant="danger">Terminar Bingo</b-button>
+    <!-- <b-button v-if="!sorteando" @click="iniciar" block variant="success">Iniciar Bingo!</b-button> -->
+    <b-button @click="sortear" block variant="success">Sortear número</b-button>
     <div class="row">
-      <div class="col-md-6">
-        <router-link class="btn btn-primary element-full" to="/sorteio">Tela de sorteio</router-link>
-      </div>
-      <div class="col-md-6">
-        <router-link class="btn btn-success element-full" to="/cartela">Modo de cartela</router-link>
+      <div class="col-md-12">
+        <p class="ultimoSorteado">
+          {{ ultimoSorteado }}
+        </p>
       </div>
     </div>
+    <span class="numeros" v-for="n in numerosSorteados" :key="n">{{ n }}</span>
   </div>
 </template>
 
@@ -22,21 +23,23 @@ export default {
   },
   data() {
     return {
-      numerosSorteados: [],
-      sorteando: false,
-      ultimoSorteado: '--'
+      numerosSorteados: localStorage.getItem('numerosSorteados') ? localStorage.getItem('numerosSorteados').split(',') : [],
+      //sorteando: false,
+      ultimoSorteado: localStorage.getItem('ultimoSorteado') || '--'
     }
   },
   methods: {
-    iniciar() {
+    /*iniciar() {
       this.sorteando = true
-    },
+    },*/
 
     terminar() {
       if(confirm("Deseja mesmo terminar este sorteio?")) {
-        this.sorteando = false
         this.numerosSorteados = []
         this.ultimoSorteado = '--'
+        localStorage.removeItem('numerosSorteados')
+        localStorage.removeItem('ultimoSorteado')
+        this.$router.push('/')
       }
     },
 
@@ -45,19 +48,20 @@ export default {
     },
 
     sortear() {
-      const numerosPorCartao = 75;
+      let numerosPorCartao = 75;
       let numeroSorteado = Math.ceil(Math.random() * numerosPorCartao);
-
       if(this.numerosSorteados.length < numerosPorCartao) {
         while(this.numerosSorteados.includes(numeroSorteado)) {
           numeroSorteado = Math.ceil(Math.random() * numerosPorCartao);
         }
         this.ultimoSorteado = numeroSorteado
+        localStorage.setItem('ultimoSorteado', this.ultimoSorteado)
         let numerosOrdenar = this.numerosSorteados
         numerosOrdenar.push(numeroSorteado)
         
         numerosOrdenar = numerosOrdenar.sort(this.sortNumber)
         this.numerosSorteados = numerosOrdenar
+        localStorage.setItem('numerosSorteados', this.numerosSorteados.join())
       } else {
         alert('Todos os números foram sorteados!')
       }

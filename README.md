@@ -1,24 +1,5 @@
-# bingo_web_v2
+# BindoOnline
 
-## Project setup
+### Um simples projeto de bingo online feito em VueJs
 ```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Possui função de gerar as cartelas e também fazer o sorteio. Para marcar um número na cartela basta clicar, o mesmo serve para desmarcar. Os dados ficam armazenados no localStorage para o caso de um refresh acidental.

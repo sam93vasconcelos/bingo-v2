@@ -1,32 +1,47 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="app" class="container">
+    <img src="./assets/lottery.png" class="fleft" alt="">
+    <h1><router-link class="black" to="/">BingOnline</router-link></h1>
+    <hr>
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <router-view/>
+    </transition>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  /* Routes Transitions */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+  }
 
-#nav {
-  padding: 30px;
-}
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0
+  }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  .fleft {
+    float: left;
+    position: relative;
+    top: 7px;
+    right: 10px;
+  }
+  .element-full {
+    width: 100%;
+  }
+  .black {
+    color: black;
+    text-decoration: none;
+  }
+  .black:hover {
+    color: black;
+    text-decoration: none;
+  }
 </style>
