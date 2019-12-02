@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-12">
         <p class="ultimoSorteado">
-          {{ ultimoSorteado }}
+          {{ coluna }} - {{ ultimoSorteado }}
         </p>
       </div>
     </div>
@@ -24,15 +24,29 @@ export default {
   data() {
     return {
       numerosSorteados: localStorage.getItem('numerosSorteados') ? localStorage.getItem('numerosSorteados').split(',') : [],
-      //sorteando: false,
-      ultimoSorteado: localStorage.getItem('ultimoSorteado') || '--'
+      ultimoSorteado: localStorage.getItem('ultimoSorteado') || '--',
     }
   },
-  methods: {
-    /*iniciar() {
-      this.sorteando = true
-    },*/
 
+  computed: {
+    coluna() {
+      if(this.ultimoSorteado > 1 && this.ultimoSorteado < 15) {
+        return 'B'
+      } else if (this.ultimoSorteado > 16 && this.ultimoSorteado < 30) {
+        return 'I'
+      } else if (this.ultimoSorteado > 31 && this.ultimoSorteado < 45) {
+        return 'N'
+      } else if (this.ultimoSorteado > 46 && this.ultimoSorteado < 60) {
+        return 'G'
+      } else if (this.ultimoSorteado > 61 && this.ultimoSorteado < 75) {
+        return 'O'
+      } else {
+        return '--'
+      }
+    }
+  },
+
+  methods: {
     terminar() {
       if(confirm("Deseja mesmo terminar este sorteio?")) {
         this.numerosSorteados = []
@@ -47,6 +61,22 @@ export default {
       return a - b;
     },
 
+    definirColuna(numero) {
+      if(numero > 1 && numero < 15) {
+        this.coluna = 'B'
+      } else if (numero > 16 && numero < 30) {
+        this.coluna = 'I'
+      } else if (numero > 31 && numero < 45) {
+        this.coluna = 'N'
+      } else if (numero > 46 && numero < 60) {
+        this.coluna = 'G'
+      } else if (numero > 61 && numero < 75) {
+        this.coluna = 'O'
+      } else {
+        this.coluna = '--'
+      }
+    },
+
     sortear() {
       let numerosPorCartao = 75;
       let numeroSorteado = Math.ceil(Math.random() * numerosPorCartao);
@@ -55,6 +85,7 @@ export default {
           numeroSorteado = Math.ceil(Math.random() * numerosPorCartao);
         }
         this.ultimoSorteado = numeroSorteado
+
         localStorage.setItem('ultimoSorteado', this.ultimoSorteado)
         let numerosOrdenar = this.numerosSorteados
         numerosOrdenar.push(numeroSorteado)
@@ -95,7 +126,7 @@ export default {
     display: inline-block;
     border: solid 2px #efd72d;
     background-color: #fff5ac;
-    width: 100px;
+    width: 200px;
     height: 100px;
     padding: 15px 0px;
     text-align: center;
